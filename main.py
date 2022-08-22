@@ -1,8 +1,9 @@
+from loader import bot
+import handlers
+from utils.functions import set_commands
 
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    set_commands(bot)
+    bot.infinity_polling()
+    print("Bot closed")
