@@ -11,7 +11,8 @@ def start(message: Message) -> None:
 
 
 @bot.message_handler(commands=["help"])
-def help(message: Message) -> None:
+def helps(message: Message) -> None:
     locale = "ru" if message.from_user.language_code.lower() == "ru" else "en"
-    help_msg = res[locale]["msgs"]["COMMANDS_LIST"].format("\n".join(commands))
+    help_msg = res[locale]["msgs"]["COMMANDS_LIST"].\
+        format("\n".join(["{0} - {1}".format(key, value) for key, value in commands.items()]))
     bot.send_message(message.chat.id, help_msg)
