@@ -16,3 +16,9 @@ def helps(message: Message) -> None:
     help_msg = res[locale]["msgs"]["COMMANDS_LIST"].\
         format("\n".join(["{0} - {1}".format(key, value) for key, value in commands.items()]))
     bot.send_message(message.chat.id, help_msg)
+
+
+@bot.message_handler(content_types=["text"])
+def convert(message: Message) -> None:
+    data = message.text
+

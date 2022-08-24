@@ -10,5 +10,7 @@ if __name__ == "__main__":
     #bot.infinity_polling()
     #print("Bot closed")
     curr = Currency.get_list()
+    index = 1
     for name, descr in curr.items():
-        print(name, descr)
+        print(index, name, descr)
+        index += 1
