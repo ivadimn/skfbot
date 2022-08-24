@@ -1,6 +1,7 @@
 from telebot.types import Message
-from loader import bot
+from loader import bot, curr_list
 from config_data.resources import commands, res
+from utils.functions import parse_data
 
 
 @bot.message_handler(commands=["start", "reset"])
@@ -21,4 +22,6 @@ def helps(message: Message) -> None:
 @bot.message_handler(content_types=["text"])
 def convert(message: Message) -> None:
     data = message.text
+    base, quote, amount = parse_data(data)
+
 
