@@ -1,8 +1,9 @@
 from telebot import TeleBot
 from telebot.types import BotCommand
-import json
 from config_data.config import COMMANDS
+from config_data.resources import Msgs
 from loader import curr_list
+from errors.errors import DataError, NotCurrencyError, AmbiguousCurrencyError
 
 
 def set_commands(bot: TeleBot):
@@ -11,27 +12,22 @@ def set_commands(bot: TeleBot):
     )
 
 
-def load_currency_list() -> dict:
-    with open("curr_list.json", "r") as f:
-        currs = json.load(f)
-    return currs
-
-
 def parse_data(data: str) -> tuple:
     lst = data.split(" ")
     if len(lst) != 3:
-        print("Error data!!")
-        return ()
+        raise DataError(Msgs.ERROR_DATA)
     if not lst[2].isdigit():
-        print("Error data!!")
-        return ()
+        raise DataError(Msgs.ERROR_AMOUNT)
     return lst[0].lower(), lst[1].lower(), lst[2]
 
 
 def get_code(name: str) -> str:
-    curr = curr_list.get(name)
+    curr: dict = curr_list.get(name)
     if not curr:
-        return ""
+        raise NotCurrencyError(Msgs.ERROR_CURRENCY_NOT_FOUND.format(name))
     if len(curr) > 1:
-        return "Error"
-    return curr.keys[0]
+        cur_list = "\n".join(["{0}. {1} - {2}".format(i + 1, val[0], val[1]) for i, val in enumerate(curr)])
+        msg = "{0}\n{1}\n{2}".format(Msgs.ERROR_AMBIGUOUS_CURRENCY.format(name), cur_list, Msgs.SELECT)
+        raise AmbiguousCurrencyError(msg)
+    return curr[0][0]
+
