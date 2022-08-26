@@ -18,16 +18,7 @@ def parse_data(data: str) -> tuple:
         raise DataError(Msgs.ERROR_DATA)
     if not lst[2].isdigit():
         raise DataError(Msgs.ERROR_AMOUNT)
-    return lst[0].lower(), lst[1].lower(), lst[2]
+    return lst[0].lower(), lst[1].lower(), int(lst[2])
 
 
-def get_code(name: str) -> str:
-    curr: dict = curr_list.get(name)
-    if not curr:
-        raise NotCurrencyError(Msgs.ERROR_CURRENCY_NOT_FOUND.format(name))
-    if len(curr) > 1:
-        cur_list = "\n".join(["{0}. {1} - {2}".format(i + 1, val[0], val[1]) for i, val in enumerate(curr)])
-        msg = "{0}\n{1}\n{2}".format(Msgs.ERROR_AMBIGUOUS_CURRENCY.format(name), cur_list, Msgs.SELECT)
-        raise AmbiguousCurrencyError(msg)
-    return curr[0][0]
 

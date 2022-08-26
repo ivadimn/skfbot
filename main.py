@@ -1,16 +1,13 @@
+from telebot.custom_filters import StateFilter
 from loader import bot
 import handlers
 from utils.functions import set_commands
 from api.currency import Currency
-from utils.functions import parse_data, get_code
+from utils.functions import parse_data
 from errors.errors import DataError, NotCurrencyError, AmbiguousCurrencyError
 
-'//*[@id="equities_table"]/tbody'
 
-if __name__ == "__main__":
-    #set_commands(bot)
-    #bot.infinity_polling()
-    #print("Bot closed")
+def w_bot():
     while True:
         data = input("Введите валюты: ")
         data = data.strip()
@@ -38,5 +35,13 @@ if __name__ == "__main__":
             n = input("Введите номер нужной валюты: ")
             print(n)
             break
+
+
+if __name__ == "__main__":
+    bot.add_custom_filter(StateFilter(bot))
+    set_commands(bot)
+    bot.infinity_polling()
+    print("Bot closed")
+
 
 
