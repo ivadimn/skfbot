@@ -1,6 +1,6 @@
 from loader import curr_list
 from config_data.resources import Msgs
-from errors.errors import NotCurrencyError, AmbiguousCurrencyError
+from extensions.errors import NotCurrencyError, AmbiguousCurrencyError
 
 
 class UserData:

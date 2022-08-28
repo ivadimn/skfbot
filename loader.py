@@ -13,5 +13,5 @@ def load_currency_list() -> dict:
 storage = StateMemoryStorage()
 bot = TeleBot(config.BOT_TOKEN, state_storage=storage)
 curr_list = load_currency_list()
-redis = dict()
+cache = dict()
 
